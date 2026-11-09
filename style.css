@@ -1,203 +1,434 @@
+/* ==========================================================================
+   Ciclos en JavaScript · Hoja de estilos general
+   Concepto: hoja cuadriculada de laboratorio (el fondo) + panel de
+   resultados oscuro (lo memorable). Todo lo demás es sobrio.
+   Uso: <link rel="stylesheet" href="css/estilos.css"> dentro del <head>
+   ========================================================================== */
+
+/* ---------- 1. Variables ---------- */
 :root {
-  /* Colores */
-  --primary-color: #2563eb;
-  --primary-dark: #1d4ed8;
-  --secondary-color: #475569;
-  --secondary-dark: #334155;
-  --background-color: #f3f7ff;
-  --background-soft: #eaf2ff;
-  --text-color: #0f172a;
-  --muted-text: #52607a;
-  --card-bg: #ffffff;
-  --border-color: #dfe7f5;
-  --success-color: #10b981;
-  --danger-color: #ef4444;
-  --shadow-soft: 0 10px 25px rgba(15, 23, 42, 0.08);
+  --tinta: #0f1b33;          /* texto y panel de resultados */
+  --tinta-suave: #4a5876;    /* texto secundario */
+  --papel: #f2f5fa;          /* fondo de la página */
+  --blanco: #ffffff;
+  --linea: #c9d3e3;          /* bordes */
+  --cobalto: #2f4bff;        /* acción principal */
+  --cobalto-oscuro: #1f35c7;
+  --ambar: #ffc857;          /* valores calculados */
+  --exito: #3ddc97;
+  --error: #ff6b6b;
 
-  /* Tipografía */
-  --font-family: 'Inter', 'Segoe UI', Tahoma, sans-serif;
-  --font-size-base: 16px;
-  --line-height-base: 1.6;
-
-  /* Espaciado */
-  --spacing-sm: 0.5rem;
-  --spacing-md: 1rem;
-  --spacing-lg: 2rem;
-  --spacing-xl: 4rem;
-
-  /* Bordes */
-  --border-radius: 14px;
+  --fuente: "Segoe UI", "Helvetica Neue", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  --radio: 10px;
+  --ancho: 860px;
 }
 
-* {
+/* ---------- 2. Base ---------- */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
+}
+
+html {
+  background-color: var(--papel);
+  /* cuadrícula de cuaderno */
+  background-image:
+    linear-gradient(rgba(47, 75, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(47, 75, 255, 0.07) 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-attachment: fixed;
+}
+
+body {
+  max-width: var(--ancho);
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+  font-family: var(--fuente);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--tinta);
+}
+
+h1,
+h2 {
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  margin: 0 0 0.75rem;
+}
+
+h1 {
+  font-size: clamp(1.7rem, 4.5vw, 2.5rem);
+  font-weight: 800;
+}
+
+h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+p,
+li {
+  max-width: 68ch;
+}
+
+p {
+  margin: 0 0 0.9rem;
+}
+
+a {
+  color: var(--cobalto);
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: var(--cobalto-oscuro);
+}
+
+:focus-visible {
+  outline: 3px solid var(--cobalto);
+  outline-offset: 2px;
+}
+
+/* ---------- 3. Encabezado ---------- */
+header {
+  background: var(--tinta);
+  color: var(--blanco);
+  border-radius: var(--radio);
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 1.5rem;
+}
+
+header h1 {
+  margin-bottom: 0.4rem;
+}
+
+header p {
+  margin: 0;
+  color: #b8c4dd;
+}
+
+/* enlace "← Volver al menú" */
+header a {
+  display: inline-block;
+  margin-bottom: 1rem;
+  padding: 0.2rem 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  color: var(--blanco);
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: background-color 0.15s;
+}
+
+header a:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: var(--blanco);
+}
+
+/* conceptos del ejercicio: "Ciclo while · Acumuladores · ..." */
+#etiquetas {
+  color: var(--ambar);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+/* ---------- 4. Secciones ---------- */
+main > section {
+  margin-bottom: 1.5rem;
+}
+
+/* tarjetas del menú principal */
+#seccionEjemplos,
+#seccionTaller,
+#seccionReto {
+  background: var(--blanco);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  padding: 1.25rem 1.5rem;
+}
+
+#seccionEjemplos p,
+#seccionReto p {
+  margin-bottom: 0;
+}
+
+/* lista de ejercicios del taller */
+#seccionTaller ul {
+  list-style: none;
   margin: 0;
   padding: 0;
 }
 
-html {
-  scroll-behavior: smooth;
+#seccionTaller li {
+  max-width: none;
+  border-top: 1px solid var(--linea);
 }
 
-body {
-  font-family: var(--font-family);
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-base);
-  color: var(--text-color);
-  background: linear-gradient(180deg, #edf5ff 0%, #f8fbff 100%);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+#seccionTaller li:first-child {
+  border-top: 0;
 }
 
-header {
-  background: linear-gradient(135deg, #0f172a 0%, #1d4ed8 100%);
-  color: white;
-  padding: 3rem 1.25rem 2.5rem;
-  text-align: center;
-  box-shadow: var(--shadow-soft);
+#seccionTaller li a {
+  display: block;
+  padding: 0.6rem 0.25rem;
+  text-decoration: none;
+  color: var(--tinta);
+  transition: color 0.15s, padding-left 0.15s;
 }
 
-header h1 {
-  color: #ffffff;
-  font-size: clamp(2rem, 4vw, 3rem);
+#seccionTaller li a:hover {
+  color: var(--cobalto);
+  padding-left: 0.6rem;
+}
+
+/* enunciado del ejercicio */
+#enunciado {
+  background: var(--blanco);
+  border: 1px solid var(--linea);
+  border-left: 5px solid var(--cobalto);
+  border-radius: var(--radio);
+  padding: 1.25rem 1.5rem;
+}
+
+#enunciado ul {
+  margin: 0 0 0.9rem;
+  padding-left: 1.25rem;
+}
+
+#enunciado li {
+  margin-bottom: 0.3rem;
+}
+
+#enunciado p:last-child,
+#enunciado ul:last-child {
+  margin-bottom: 0;
+}
+
+/* ---------- 5. Formularios ---------- */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  background: var(--blanco);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1rem;
+}
+
+label {
+  margin-top: 0.6rem;
+  font-weight: 600;
+}
+
+label:first-child {
+  margin-top: 0;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  font: inherit;
+  color: var(--tinta);
+  background: var(--papel);
+  border: 1.5px solid var(--linea);
+  border-radius: 8px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+input:hover,
+textarea:hover {
+  border-color: var(--tinta-suave);
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--cobalto);
+  background: var(--blanco);
+  box-shadow: 0 0 0 3px rgba(47, 75, 255, 0.2);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #8d99b3;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 5rem;
+}
+
+button {
+  align-self: flex-start;
+  margin-top: 1rem;
+  padding: 0.65rem 1.4rem;
+  font: inherit;
+  font-weight: 700;
+  color: var(--blanco);
+  background: var(--cobalto);
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.15s, transform 0.1s;
+}
+
+button:hover {
+  background: var(--cobalto-oscuro);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+/* ---------- 6. Resultados (panel oscuro) ---------- */
+#resultado {
+  background: var(--tinta);
+  color: #e6ecf8;
+  border-radius: var(--radio);
+  padding: 1.25rem 1.5rem;
+}
+
+#resultado h2 {
+  color: var(--blanco);
+}
+
+#resultado p {
   margin-bottom: 0.5rem;
 }
 
-header p {
-  color: rgba(255, 255, 255, 0.82);
-  font-size: 1.05rem;
-  margin: 0;
+/* mensaje principal: "Aún no hay datos...", "Acceso concedido", etc. */
+#mensaje {
+  margin-bottom: 1rem;
+  padding: 0.6rem 0.9rem;
+  background: rgba(255, 255, 255, 0.08);
+  border-left: 4px solid var(--ambar);
+  border-radius: 6px;
 }
 
-main {
-  width: min(1100px, calc(100% - 2rem));
-  margin: 2rem auto 3rem;
-  display: grid;
-  gap: 1.5rem;
+/* valores calculados */
+#resultado strong {
+  color: var(--ambar);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
 }
 
-section {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  padding: 1.5rem 1.5rem 1.25rem;
-  box-shadow: var(--shadow-soft);
+/* listas generadas por JavaScript (registro, detalle, notas...) */
+#resultado ul {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  color: var(--text-color);
-  margin-bottom: 0.8rem;
-  line-height: 1.2;
+#resultado li {
+  max-width: none;
+  padding: 0.4rem 0;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
+  font-variant-numeric: tabular-nums;
+}
+
+#resultado li:last-child {
+  border-bottom: 0;
+}
+
+/* tablas generadas por JavaScript */
+table {
+  width: 100%;
+  margin-bottom: 1rem;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+th,
+td {
+  padding: 0.5rem 0.6rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+th {
+  color: var(--ambar);
   font-weight: 700;
 }
 
-p {
-  margin-bottom: 0.9rem;
-  color: var(--muted-text);
+/* elementos vacíos no ocupan espacio */
+#resultado ul:empty,
+#resultado table:empty {
+  display: none;
 }
 
-ul, ol {
-  margin-left: 1.2rem;
-  margin-bottom: 0.5rem;
-  color: var(--text-color);
+/* ---------- 7. Página de ejemplos (sin header ni main) ---------- */
+body > h1 {
+  margin-bottom: 1.5rem;
 }
 
-li {
-  margin-bottom: 0.6rem;
-  line-height: 1.6;
+body > ul,
+body > p[id] {
+  background: var(--tinta);
+  color: #e6ecf8;
+  border-radius: var(--radio);
+  padding: 0.9rem 1.25rem;
+  margin: 0 0 2rem;
 }
 
-a {
-  color: var(--primary-color);
-  text-decoration: none;
-  transition: color 0.2s ease, transform 0.2s ease;
+body > ul {
+  list-style: none;
+  max-width: none;
+  font-variant-numeric: tabular-nums;
 }
 
-a:hover {
-  color: var(--primary-dark);
-  text-decoration: underline;
+body > ul li {
+  max-width: none;
+  padding: 0.25rem 0;
 }
 
-.container {
-  width: min(1200px, calc(100% - 2rem));
-  margin: 0 auto;
+body > ul:empty,
+body > p[id]:empty {
+  display: none;
 }
 
-.card {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  padding: var(--spacing-lg);
-  box-shadow: var(--shadow-soft);
+/* ---------- 8. Estados opcionales (para usar desde JS) ---------- */
+.exito {
+  color: var(--exito);
+  font-weight: 700;
 }
 
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.2rem;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #ffffff;
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-  border: none;
-  border-radius: 999px;
-  cursor: pointer;
-  text-decoration: none;
-  transition: transform 0.15s ease, box-shadow 0.2s ease, opacity 0.2s ease;
-  box-shadow: 0 8px 16px rgba(37, 99, 235, 0.2);
+.error {
+  color: var(--error);
+  font-weight: 700;
 }
 
-.btn:hover {
-  transform: translateY(-1px);
-  text-decoration: none;
+.advertencia {
+  color: var(--ambar);
+  font-weight: 700;
 }
 
-.btn:active {
-  transform: scale(0.98);
-}
-
-.btn-secondary {
-  background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
-  box-shadow: 0 8px 16px rgba(71, 85, 105, 0.18);
-}
-
-input, textarea, select {
-  width: 100%;
-  padding: 0.8rem 0.9rem;
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
-  font-family: inherit;
-  font-size: 1rem;
-  background: #fff;
-  color: var(--text-color);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-input:focus, textarea:focus, select:focus {
-  outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
-}
-
-.flex { display: flex; }
-.flex-col { flex-direction: column; }
-.items-center { align-items: center; }
-.justify-center { justify-content: center; }
-.justify-between { justify-content: space-between; }
-.gap-4 { gap: 1rem; }
-
-@media (max-width: 768px) {
-  header {
-  padding: 2.5rem 1rem 2rem;
+/* ---------- 9. Pantallas pequeñas ---------- */
+@media (max-width: 600px) {
+  body {
+    padding: 1rem 0.9rem 3rem;
   }
 
-  main {
-  width: min(100% - 1rem, 1100px);
+  header,
+  form,
+  #enunciado,
+  #resultado,
+  #seccionEjemplos,
+  #seccionTaller,
+  #seccionReto {
+    padding: 1rem 1.1rem;
   }
 
-  section {
-  padding: 1.25rem 1rem;
+  button {
+    align-self: stretch;
+  }
+}
+
+/* ---------- 10. Accesibilidad ---------- */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
   }
 }
